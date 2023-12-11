@@ -1,0 +1,457 @@
+openapi: 3.0.0
+info:
+  title: Accounting
+  description: REST API for Accounting application
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /users:
+    post:
+      summary: User registration
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+      responses:
+        '200':
+          description: registration success
+        '409':
+          description: username already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUsername'
+        '400':
+          description: the password does not meet the requirements(Email/phone format is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPassword'
+
+  /login:
+    post:
+      summary: User login
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: login successful
+        '401':
+          description: login failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorLogin'
+
+  /users/{userId}:
+    get:
+      summary: Get user information
+      operationId: getUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User information details
+        '404':
+          description: User not found
+
+    put:
+      summary: Modify user information
+      operationId: updateUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+      responses:
+        '200':
+          description: User information modified successfully
+        '409':
+          description: username already exists
+        '400':
+          description: the password does not meet the requirements(Email/phone format is invalid）
+    delete:
+      summary: Modify user information
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Delete user successfully
+        '500':
+          description: Failed to delete user
+
+
+  /expenses:
+    post:
+      summary: Add expense record
+      operationId: createExpense
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expenseType:
+                  type: string
+                amount:
+                  type: number
+                date:
+                  type: string
+                  format: date
+                comment:
+                  type: string
+      responses:
+        '200':
+          description: Add expense record successfully
+  /expenses/{expenseId}:
+    put:
+      summary: Update expense record
+      operationId: updateExpense
+      parameters:
+        - name: expenseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expenseType:
+                  type: string
+                amount:
+                  type: number
+                date:
+                  type: string
+                  format: date
+                comment:
+                  type: string
+      responses:
+        '200':
+          description: update expense record successfully
+        '404':
+          description: expense record does not exist
+    delete:
+      summary: Delete expense record
+      operationId: deleteExpense
+      parameters:
+        - name: expenseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: delete expense record successfully
+        '404':
+          description: expense record does not exist
+  /incomes:
+    post:
+      summary: Add income record
+      operationId: createIncome
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                incomeType:
+                  type: string
+                amount:
+                  type: number
+                date:
+                  type: string
+                  format: date
+                comment:
+                  type: string
+      responses:
+        '200':
+          description: Add income record successfully
+  /incomes/{incomeId}:
+    put:
+      summary: Update income record
+      operationId: updateIncome
+      parameters:
+        - name: incomeId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                incomeType:
+                  type: string
+                amount:
+                  type: number
+                date:
+                  type: string
+                  format: date
+                comment:
+                  type: string
+      responses:
+        '200':
+          description: Update income record successfully
+        '404':
+          description: income record does not exist
+    delete:
+      summary: Delete income record
+      operationId: deleteIncome
+      parameters:
+        - name: incomeId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Delete income record successfully
+        '404':
+          description: Income record does not exist
+  /report:
+    get:
+      summary: Generate monthly/quarterly/annual consumption report
+      operationId: generateReport
+      parameters:
+        - name: dateStart
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: dateEnd
+          in: query
+          required: false
+          example: 2023
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Return consumption charts
+          
+  /report/{userId}:
+    post:
+      summary: Create a chart report for a user
+      description: Generates a chart-based financial report (monthly/yearly) for a user.
+      operationId: createChartReport
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for the user for whom the report is being generated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timePeriod:
+                  type: object
+                  properties:
+                    startDate:
+                      type: string
+                      format: date
+                      description: The start date of the reporting period
+                    endDate:
+                      type: string
+                      format: date
+                      description: The end date of the reporting period
+                transactions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier of the transaction
+                      amount:
+                        type: number
+                        format: float
+                        description: Amount of the transaction
+                      date:
+                        type: string
+                        format: date
+                        description: Date when the transaction occurred
+                      type:
+                        type: string
+                        enum: [Income, Expense]
+                        description: Type of the transaction
+                      category:
+                        type: string
+                        description: Category of the transaction if it's an expense
+                      source:
+                        type: string
+                        description: Source of the transaction if it's an income
+              required:
+                - timePeriod
+                - transactions
+      responses:
+        '201':
+          description: Chart report successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reportId:
+                    type: string
+                    description: Unique identifier of the generated report
+                  chart:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                        description: Title of the chart
+                      dataPoints:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            label:
+                              type: string
+                              description: Label for the data point
+                            value:
+                              type: number
+                              description: Value for the data point
+
+  /user/records:
+    get:
+      summary: Query all user records(Search and filter)
+      operationId: getUserRecords
+      parameters:
+        - name: recordType
+          in: query
+          schema:
+            type: string
+          description: record type (expense/income)
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: start date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: end date
+        - name: expenseType
+          in: query
+          schema:
+            type: string
+          description: expense type
+        - name: incomeType
+          in: query
+          schema:
+            type: string
+          description: income type
+        - name: minAmount
+          in: query
+          schema:
+            type: number
+          description: minimum expense amount
+        - name: maxAmount
+          in: query
+          schema:
+            type: number
+          description: maximum consumption amount
+      responses:
+        '200':
+          description: Returns a list of records that meet the search conditions
+
+components:
+  schemas:
+    ErrorLogin:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: login
+        message:
+          type: string
+          description: Error message
+          example: Invalid username or password
+    ErrorUsername:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: register
+        message:
+          type: string
+          description: Error message
+          example: username already exists
+    ErrorPassword:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: register
+        message:
+          type: string
+          description: Error message
+          example: This password does not meet the length...

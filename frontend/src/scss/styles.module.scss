@@ -1,0 +1,51 @@
+// EditTransactionModal.scss
+.edit-transaction-modal {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto; // 
+  max-width: 600px; // 
+  background-color: #fff; //
+  border-radius: 8px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
+  padding: 20px;
+  z-index: 1050; 
+
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; 
+    .modal-title {
+      font-size: 1.25rem;
+    }
+
+    .close-button {
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+  }
+
+  // 表单样式
+  .modal-body {
+    .form-control {
+      margin-bottom: 10px;
+    }
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+
+    .update-button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+}

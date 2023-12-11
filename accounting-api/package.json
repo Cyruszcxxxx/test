@@ -1,0 +1,24 @@
+{
+  "name": "accounting-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "consola": "^3.2.3",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "ejs": "^3.1.9",
+    "express": "~4.16.1",
+    "express-session": "^1.17.3",
+    "http-errors": "~1.6.3",
+    "mongoose": "^8.0.3",
+    "mongoose-auto-increment": "^5.0.1",
+    "morgan": "~1.9.1",
+    "pug": "2.0.0-beta11"
+  }
+}

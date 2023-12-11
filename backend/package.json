@@ -1,0 +1,25 @@
+{
+  "name": "final-project-accounting",
+  "version": "1.0.0",
+  "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/OuSBNpwM) # final-project-group **ExpenseTracker:** ExpenseTracker is a comprehensive website designed to help individuals manage their personal finances with ease and precision. The core functionality of this platform lies in its ability to allow users to meticulously log their daily expenses. Each entry can include critical details such as the amount spent, the date of the transaction, the category of expenditure (like food, entertainment, utilities), and any additional remarks for context.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.2"
+  }
+}
